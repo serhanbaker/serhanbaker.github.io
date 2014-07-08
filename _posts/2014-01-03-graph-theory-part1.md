@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Graph Theory Part 1
+title: Graph Theory Part 1 - Graph Types, Data Structures, Traversal
 ---
 ![](/public/img/g1/title.PNG "a graph")
 
@@ -39,3 +39,215 @@ Think a function-call graph for a compiler. If a function have recursion, this w
 ### Cyclic or Acyclic
 ![](/public/img/g1/cyclic_acyclic.PNG "cyclic vs. acyclic")
 A graph is cyclic if it has a cycle. For example, __trees__ are basically connected acyclic undirected graphs.
+
+
+## Graph Data Structures
+![](/public/img/g1/ds1.PNG "a graph")
+Selecting the right data structure can have a huge impact on performance. Two basic choices are: *adjacency matrices* and *adjacency lists*. Let's assume our graph *G = (V,E)* contains *n* vertices and *m* edges. The time and space complexities of a graph algorithm are usually expressed as a function of the *number of vertices and edges*.
+
+### Adjacency Matrix
+![](/public/img/g1/adjm.PNG "adjacency matrix representation")
+The adjacency matrix representation uses a n x n boolean matrix indexed by vertices, with a 1 indicating the presence of an edge, and 0 indicating the absence of an edge.
+
+### Adjacency List
+![](/public/img/g1/adjl.PNG "adjacency list representation")
+In the adjacency list representation, each vertex v, has a list of vertices to which it has an edge.
+
+## Which one is better?
+Let's look at the relative performance differences between adjacency lists and adjacency matrices.
+
+<table>
+  <thead>
+    <tr>
+      <th>Representation</th>
+      <th>Storage</th>
+      <th>Add Vertex</th>
+      <th>Add Edge</th>
+      <th>Remove Vertex</th>
+      <th>Remove Edge</th>
+      <th>Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Adjacency Matrix</td>
+      <th>O(|V|^2)</th>
+      <th>O(|V|^2)</th>
+      <th>O(1)</th>
+      <th>O(|V|^2)</th>
+      <th>O(1)</th>
+      <th>O(1)</th>
+    </tr>
+    <tr>
+      <td>Adjacency List</td>
+      <th>O(|V|+|E|)</th>
+      <th>O(1)</th>
+      <th>O(1)</th>
+      <th>O(|V|+|E|)</th>
+      <th>O(|E|)</th>
+      <th>O(|V|)</th>
+    </tr>
+  </tbody>
+</table>
+
+Generally, adjacency lists are the right data structure for most applications of graphs. The list below is completely taken from the **Algorithm Design Manual**
+by __*Steven Skiena*__.
+<table>
+  <thead>
+    <tr>
+      <th>Comparison</th>
+      <th>Winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Faster to test if (x, y) is in graph?</td>
+      <td>Adjacency Matrix</td>
+    </tr>
+    <tr>
+      <td>Faster to find the degree of a vertex?</td>
+      <td>Adjacency List</td>
+    </tr>
+    <tr>
+      <td>Less memory on small graphs?</td>
+      <td>Adjacency List (|V|+|E|) vs. (|V|^2)</td>
+    </tr>
+    <tr>
+      <td>Less memory on big graphs?</td>
+      <td>Adjacency Matrix (a small win)</td>
+    </tr>
+    <tr>
+      <td>Edge insertion or deletion?</td>
+      <td>Adjacency Matrix O(1) vs. O(|E|)</td>
+    </tr>
+    <tr>
+      <td>Faster to traverse the graph?</td>
+      <td>Adjacency List Θ(|V|+|E|) vs. Θ(|V|^2)</td>
+    </tr>
+    <tr>
+      <td>Better for most problems?</td>
+      <td>Adjacency Matrix</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## </> The Code
+
+My implementation (*Java*) uses adjacency lists as the primary data structure to represent graphs. First, I'm going to define a Node class.
+
+```
+public class Node {
+    int val;
+    Node next;
+
+    public Node(int val) {
+        this.val = val;
+        next = null;
+    }
+}
+```
+
+That's it! I'll just add a toString() method to make it look more understandable:
+
+
+```
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(val);
+    sb.append("-> ");
+    Node p = this.next;
+    while (p != null) {
+        sb.append(p.val);
+        sb.append("-> ");
+        p = p.next;
+    }
+    sb.append("X");
+    return sb.toString();
+}
+```
+
+This is our *Node* class. Yes, like a linked list! Now, look at the *Graph* class
+
+```
+public class Graph {
+    /* Maximum possible vertex count. Yes, a bit hacky */
+    static final int MAXV = 1000;
+
+    /* I want to ignore 0, so it's 1 to MAXV */
+    Node[] adjList = new Node[MAXV + 1];
+
+    /* outdegree of each vertex */
+    int[] degrees = new int[MAXV + 1];
+
+    int nEdges; // # of E
+    int nVertices; // # of V
+    boolean directed;
+
+    /* initialize */
+    public Graph() {
+        nEdges = 0;
+        nVertices = 0;
+        for (int i = 1; i < MAXV; i++) {
+            degrees[i] = 0;
+            adjList[i] = null;
+        }
+    }
+}
+```
+
+As you can see, *adjList* array holds the Nodes and their neighbors.
+I also keep number of vertices and edges, directed/undirected flag, and also out-degrees of each vertex.
+We can hold other information such as weight, simple/nonsimple flag, and so on..
+
+
+```
+public void readGraph(boolean directed) {
+    int x, y;
+    Scanner in = new Scanner(System.in);
+    nVertices = in.nextInt();
+    /* # of given connections between vertices */
+    int m = in.nextInt();
+    for (int i = 1; i <= m; i++) {
+        x = in.nextInt();
+        y = in.nextInt();
+        insertEdge(x, y, directed);
+    }
+}
+```
+
+I read graph as integers here, it can be changed but this is just a quick and dirty implementation :) First, I read number of vertices and number of edges. Then, I insert pairs of vertices with a connection between them. I also send the directness flag to *insertEdge* as a parameter.
+
+
+```
+void insertEdge(int x, int y, boolean directed) {
+    Node p = new Node(y);
+    p.next = adjList[x];
+    adjList[x] = p;
+    degrees[x]++;
+    if (!directed)
+        insertEdge(y, x, true);
+    else
+        nEdges++;
+}
+```
+
+I insert new edges (think vertex pairs) into *adjList* as I read them. If it's an undirected graph, this function also inserts the reversed pair to the list.
+For example, the code reads *"5 6"*. Then it adds a *Node* with value of 6 to the 5th position at list. If it's an undirected graph, again, it adds a *Node* with value of __*6*__ to the __*5th* position__ at list.
+
+
+```
+void printGraph() {
+    for(int i = 1; i < adjList.length; i++) {
+        Node p = adjList[i];
+        if (p != null)
+            System.out.println(i + ": " + p);
+    }
+}
+```
+
+And we print. It's actually pretty straightforward if you take a look at that.
+
+## Graph Traversal
+
+*To be continued..*
