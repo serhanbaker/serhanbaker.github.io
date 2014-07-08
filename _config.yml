@@ -9,8 +9,8 @@ permalink:        pretty
 title:            Serhan Baker
 tagline:          'Homepage'
 description:      'Thoughts and codes'
-url:              http://localhost:4000
-#url:              http://serhanbaker.io
+#url:              http://localhost:4000
+url:              http://serhanbaker.io
 baseurl:          /
 
 author:
