@@ -38,4 +38,3 @@ Think a function-call graph for a compiler. If a function have recursion, this w
 A graph is cyclic if it has a cycle. For example, __trees__ are basically connected acyclic undirected graphs.
 
 
-> Design graphs, not algorithms
