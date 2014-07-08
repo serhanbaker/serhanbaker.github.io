@@ -126,7 +126,7 @@ by __*Steven Skiena*__.
     </tr>
     <tr>
       <td>Better for most problems?</td>
-      <td>Adjacency Matrix</td>
+      <td>Adjacency List</td>
     </tr>
   </tbody>
 </table>
