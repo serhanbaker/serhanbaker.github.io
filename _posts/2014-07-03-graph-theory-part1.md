@@ -288,7 +288,8 @@ class Graph {
     public void readGraph() {
         int x, y;
         Scanner in = new Scanner(System.in);
-        int m = in.nextInt(); // # of given connections between vertices
+         /* # of given connections between vertices */
+        int m = in.nextInt();
         for (int i = 1; i <= m; i++) {
             x = in.nextInt();
             y = in.nextInt();
