@@ -260,3 +260,57 @@ Input format should be like this:
 3 4
 4 5
 ```
+
+## A Better Implementation
+Wouldn't that be better if we had a more *flexible* graph? And without creating a Node class?
+It would. And this one is ~10 lines shorter. Yay!
+I think the code is self explanatory, I'd even say it's easier to read.
+
+Here we go:
+
+```
+import java.util.*;
+class Graph {
+    HashMap<Integer, LinkedList<Integer>> adjList;
+    boolean directed;
+
+    public Graph(boolean directed) {
+        this.directed = directed;
+        adjList = new HashMap<Integer, LinkedList<Integer>>();
+    }
+
+    public void addEdge(int v1, int v2) {
+        adjList.get(v1).add(v2);
+        if (!directed)
+            adjList.get(v2).add(v1);
+    }
+
+    public void readGraph() {
+        int x, y;
+        Scanner in = new Scanner(System.in);
+        int m = in.nextInt(); // # of given connections between vertices
+        for (int i = 1; i <= m; i++) {
+            x = in.nextInt();
+            y = in.nextInt();
+            if (!adjList.containsKey(x))
+                adjList.put(x, new LinkedList<Integer>());
+            if (!adjList.containsKey(y))
+                adjList.put(y, new LinkedList<Integer>());
+            addEdge(x, y);
+        }
+    }
+
+    public void printGraph() {
+        for (Map.Entry<Integer, LinkedList<Integer>> entry : adjList.entrySet()) {
+            Integer key = entry.getKey();
+            System.out.println(key + "-> " + getNeighbors(key));
+        }
+    }
+
+    public List<Integer> getNeighbors(int v) {
+        return adjList.get(v);
+    }
+}
+```
+
+See? It's easy! See you at part 2.
