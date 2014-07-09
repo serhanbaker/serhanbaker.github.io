@@ -263,10 +263,11 @@ Input format should be like this:
 
 ## A Better Implementation
 Wouldn't that be better if we had a more *flexible* graph? And without creating a Node class?
-It would. And this one is ~10 lines shorter. Yay!
-I think the code is self explanatory, I'd even say it's easier to read.
+It would. And this one is ~10 lines shorter.
 
-Here we go:
+I am using HashMap here, it contains information as **"_integer - list_"** pairs.
+
+I think it's also easier to read:
 
 ```
 import java.util.*;
