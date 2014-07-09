@@ -247,3 +247,16 @@ void printGraph() {
 ```
 
 And we print. It's actually pretty straightforward if you take a look at that.
+
+Input format should be like this:
+
+```
+6 7
+1 2
+1 5
+1 6
+2 5
+2 3
+3 4
+4 5
+```
