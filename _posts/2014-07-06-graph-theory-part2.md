@@ -39,12 +39,14 @@ For each edge which goes to an undiscovered vertex, mark it *discovered* and add
 
 Regardless of the order we fetch the next vertex to explore, each edge is considered exactly twice at the end. Every edge and vertex is eventually visited.
 
+## Traversal Algorithms
+
 There are two fundamental search/traversal algorithms:
 
 * Breadth First Search (BFS)
 * Depth First Search (DFS)
 
-## Breadth First Search
+### Breadth First Search
 Here, we have two fundamental operations.
 
 * Visit a node (vertex)
@@ -94,5 +96,5 @@ static void bfs(Graph g, int start) {
 
 ![](/public/img/g2/bfs.gif "this is bfs")
 
-## Depth First Search
+### Depth First Search
 *Wait for it..*
