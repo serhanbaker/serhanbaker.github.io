@@ -39,5 +39,60 @@ For each edge which goes to an undiscovered vertex, mark it *discovered* and add
 
 Regardless of the order we fetch the next vertex to explore, each edge is considered exactly twice at the end. Every edge and vertex is eventually visited.
 
-A summary of what I have been describing here: 
-![](/public/img/g2/bfs.gif "dope")
+There are two fundamental search/traversal algorithms:
+
+* Breadth First Search (BFS)
+* Depth First Search (DFS)
+
+## Breadth First Search
+Here, we have two fundamental operations.
+
+* Visit a node (vertex)
+* Gain access to its neighbors (edges!)
+
+BFS begins at the root node and inspects all the neighbors. For each neighbors, it does the same (inspecting neighbors). We have a *queue* to track those. Queue has a function of to-do list. We add vertices that we discovered to our queue, then we visit all its edges, then we remove it from the queue.
+Algorithm is as follows:
+
+```
+Enqueue the root node to Q
+Dequeue a node and inspect
+    (if found the target: return result)
+    (Otherwise: enqueue undiscovered neighbors)
+If Q is empty, that means we examined all the vertices. Quit search.
+If Q is NOT empty, GOTO step 2
+```
+
+Let's write that in Java:
+
+```
+static void bfs(Graph g, int start) {
+    Queue<Integer> q = new LinkedList<Integer>();
+    int v, vNeighbor;
+    List<Integer> p;
+    q.add(start);
+    discovered.put(start, true);
+    while(!q.isEmpty()) {
+        v = q.remove();
+        System.out.printf("discovered vertex %d\n", v);
+        p = g.getNeighbors(v);
+        for (int e : p) {
+            vNeighbor = e;
+            if (!processed.get(vNeighbor)) {
+                System.out.printf("processed edge (%d, %d)\n", v, vNeighbor);
+            }
+            if (!discovered.get(vNeighbor)) {
+                q.add(vNeighbor);
+                discovered.put(vNeighbor, true);
+                parents.put(vNeighbor, v);
+            }
+        }
+        processed.put(v, true);
+        System.out.printf("processed vertex %d\n\n", v);
+    }
+}
+```
+
+![](/public/img/g2/bfs.gif "this is bfs")
+
+## Depth First Search
+*Wait for it..*
