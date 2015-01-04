@@ -3,11 +3,11 @@ layout: page
 title: About
 ---
 
-I’m a software engineer in *Istanbul, Turkey*. I did my bachelor in **Computer Science** (graduated, 07/2013) and I'm a **generalist programmer**.
+I’m a semi-fresh software engineer in Istanbul, Turkey (graduated from Computer Science, in summer 2013) who loves to tinker with many different aspects of programming. 
 
-I’m coming from a big data background, and have a passion for data in general, and also worked on machine learning and data visualization.
+Besides my day job, you can find me programming a 2D platform game in C (in progress - still learning), prototyping some personal/useful apps (mostly framework-independent, and several web based apps), and building a repository of decent algorithms using Python (i.e. simple social media analysis, web scraper, a small scheduler, etc..), learning Haskell, or solving archived TopCoder contests.
 
-I love *minimalism*, *cooking*, *travelling* and *exploring new places*.
+I love minimalism, cooking, travelling and exploring new places.
 
 Tweet at [@serhanbaker](https://twitter.com/{{ site.twitter }}), read my code at [GitHub](https://github.com/{{ site.github }}), 
-find my resume on [linkedin](https://linkedin.com/in/{{ site.linkedin }}) or check the photographs I've taken at [instagram](https://instagram.com/{{ site.instagram }}).
+find my resume on [linkedin](https://linkedin.com/in/{{ site.linkedin }}) or check my [instagram](https://instagram.com/{{ site.instagram }}) account.
