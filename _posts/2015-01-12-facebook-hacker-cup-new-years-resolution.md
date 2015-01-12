@@ -9,8 +9,10 @@ It asks us to find if it is possible for Alex to eat the exact amount of each ma
 This problem is a version of [Knapsack Problem](http://en.wikipedia.org/wiki/Knapsack_problem), the subset sum problem. Given a set of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given sum. 
 
 The subset sum problem can be divided into two recursive subproblems
+
 * _Include_ the _last element_, recurse for n = n-1, sum = sum – set[n-1]
 * _Exclude_ the _last element_, recurse for n = n-1.
+
 If any of the above the above subproblems return true, then we have an answer. Only, there are three values for an element instead of one, and there are three sums.
 
 Following is simple recursive implementation that follows the solutions for subproblems mentioned above.
